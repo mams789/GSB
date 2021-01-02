@@ -20,18 +20,22 @@ require_once 'includes/class.pdogsb.inc.php';
 
 session_start();
 
+
+
 // Objet qui représente la connexion à la BDD
 $pdo = PdoGsb::getPdoGsb();
+
 
 
 $estConnecte = estConnecte(); 
 
 
+
 require 'vues/v_entete.php';
 
 /** 
- * Dans l'URL filtre 'uc' 
- * envoie nul si aucun élément trouver
+ * Récupere (filtre) 'uc' dans l'URL
+ * envoie nul si aucun élément est trouver
 */
 $uc = filter_input(INPUT_GET, 'uc', FILTER_SANITIZE_STRING);
 

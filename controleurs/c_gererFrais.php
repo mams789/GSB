@@ -15,13 +15,21 @@
  */
 
 
-// Si on est connecter
+
+// Récupération des informations du visiteur 
+
 $idVisiteur = $_SESSION['idVisiteur'];
+
 
 $mois = getMois(date('d/m/Y'));
 $numAnnee = substr($mois, 0, 4);
 $numMois = substr($mois, 4, 2);
 
+
+/** 
+ * Récupere (filtre) 'action' dans l'URL
+ * envoie nul si aucun élément est trouver
+*/
 $action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
 
 
