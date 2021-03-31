@@ -15,9 +15,9 @@
  */
 
 
-$action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
+$action = filtreUrl('action');
 
-$idVisiteur = $_SESSION['idVisiteur'];
+$idVisiteur = $_SESSION['utilisateur']['id'];
 
 
 switch ($action) {
@@ -46,3 +46,5 @@ case 'voirEtatFrais':
     $dateModif = dateAnglaisVersFrancais($lesInfosFicheFrais['dateModif']);
     include 'vues/v_etatFrais.php';
 }
+
+

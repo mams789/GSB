@@ -14,14 +14,129 @@
  * @link      http://www.php.net/manual/fr/book.pdo.php PHP Data Objects sur php.net
  */
 
+
+
+ 
+ /**
+  * Retourne un message de succès
+  *
+  * @param  mixed $message
+  * @return string
+  */
+ function messageSuccess(string $message, $type) : string
+ {
+
+    return "<div class='alert alert-{$type}'>{$message}</div>";
+
+ }
+
+ 
+ /**
+  * Retourne le mois et l'année actuelle au format mm/aaaa
+  *
+  * @return string
+  */
+ function getMoisAnnee() : string{
+
+    $mois = getMois(date('d/m/Y'));
+    $numAnnee = substr($mois, 0, 4);
+    $numMois = substr($mois, 4, 2);
+
+    return $numMois . '/' . $numAnnee;
+
+ }
+
+ 
+ /**
+  * Retourne la chaine récupérer dans l'URL
+  *
+  * @param  mixed $chaine
+  * @return string
+  */
+ function filtreUrl($chaine){
+
+    return filter_input(INPUT_GET, $chaine, FILTER_SANITIZE_STRING);
+
+ }
+
+
+  
+ /**
+  * Retourne la chaine récupérer via un post
+  *
+  * @param  mixed $chaine
+  * @return void
+  */
+ function filtrePost(string $chaine){
+
+    return filter_input(INPUT_POST, $chaine, FILTER_SANITIZE_STRING);
+
+ }
+ 
+ /**
+  * Filtre un élément
+  *
+  * @param  mixed $nomChamp
+  * @return array
+  */
+ function filtreInput($nomChamp){
+
+    return filter_input(INPUT_POST, $nomChamp, FILTER_DEFAULT, FILTER_FORCE_ARRAY); 
+
+ }
+
+
+ 
+ /**
+  * Permet de créer une session si elle n'existe pas
+  *
+  * @return void
+  */
+ function demarreUneSession() : void{
+
+    if(session_status() == PHP_SESSION_NONE){
+
+        session_start();
+
+    }
+
+ }
+
+ 
+ 
+ /**
+  * Vérifie si l'utilisateur est un comptable 
+  * retourne vrai si c'est le cas
+  *
+  * @return bool
+  */
+ function estComptable() : bool{
+
+    return $_SESSION['utilisateur']['role'] === 'comptable';
+ 
+ }
+
+/**
+ * Retourne la premiere lettre du mot en majuscule
+ *
+ * @param  mixed $mot
+ * @return string
+ */
+function premiereLettreEnMajuscule($mot) : string{
+
+    return ucfirst($mot);
+
+}
+
+
 /**
  * Teste si un quelconque visiteur est connecté
  *
  * @return vrai ou faux
  */
-function estConnecte()
+function estConnecte() : bool
 {
-    return isset($_SESSION['idVisiteur']);
+    return isset($_SESSION['utilisateur']['id']);
 }
 
 /**
@@ -33,11 +148,12 @@ function estConnecte()
  *
  * @return null
  */
-function connecter($idVisiteur, $nom, $prenom)
+function connecter($idUtilisateur, $nom, $prenom, $role) : void
 {
-    $_SESSION['idVisiteur'] = $idVisiteur;
-    $_SESSION['nom'] = $nom;
-    $_SESSION['prenom'] = $prenom;
+    $_SESSION['utilisateur']['id'] = $idUtilisateur;
+    $_SESSION['utilisateur']['nom'] = $nom;
+    $_SESSION['utilisateur']['prenom'] = $prenom;
+    $_SESSION['utilisateur']['role'] = $role;
 }
 
 /**
@@ -49,6 +165,23 @@ function deconnecter()
 {
     session_destroy();
 }
+
+
+
+/**
+ * Transforme une date aaaamm  vers le format mm/aaaa
+ *
+ * @param  mixed $date
+ * @return void
+ */
+function formatageDate($date) : string
+{
+
+    return substr($date, -2) . '/' . substr($date, -6, 4); 
+
+}
+
+
 
 /**
  * Transforme une date au format français jj/mm/aaaa vers le format anglais
@@ -78,6 +211,7 @@ function dateAnglaisVersFrancais($maDate)
     $date = $jour . '/' . $mois . '/' . $annee;
     return $date;
 }
+
 
 /**
  * Retourne le mois au format aaaamm selon le jour dans le mois
@@ -247,3 +381,4 @@ function nbErreurs()
         return count($_REQUEST['erreurs']);
     }
 }
+

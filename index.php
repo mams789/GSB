@@ -17,27 +17,23 @@
 require_once 'includes/fct.inc.php';
 require_once 'includes/class.pdogsb.inc.php';
 
+// Démmare une session ou reprend une session déja existante
+demarreUneSession();
 
-session_start();
 
-
+$uc = filtrePost('uc');
 
 // Objet qui représente la connexion à la BDD
 $pdo = PdoGsb::getPdoGsb();
 
 
-
+// Vérifie si un utilisateur est connectée
 $estConnecte = estConnecte(); 
 
-
-
+  
 require 'vues/v_entete.php';
 
-/** 
- * Récupere (filtre) 'uc' dans l'URL
- * envoie nul si aucun élément est trouver
-*/
-$uc = filter_input(INPUT_GET, 'uc', FILTER_SANITIZE_STRING);
+
 
 
 if ($uc && !$estConnecte) {
@@ -50,9 +46,9 @@ if ($uc && !$estConnecte) {
 }
 
 
-// routeur
+// Routeur
 
-switch ($uc) {
+switch($uc) {
 case 'connexion':
     include 'controleurs/c_connexion.php';
     break;
@@ -64,6 +60,15 @@ case 'gererFrais':
     break;
 case 'etatFrais':
     include 'controleurs/c_etatFrais.php';
+    break;
+case 'validerFrais':
+    include 'controleurs/c_validerFrais.php';
+    break;
+case 'actualiserFrais':
+    include 'controleurs/c_actualiserFrais.php';
+    break;
+case 'suivrePaiement':
+    include 'controleurs/c_suivrePaiement.php';
     break;
 case 'deconnexion':
     include 'controleurs/c_deconnexion.php';

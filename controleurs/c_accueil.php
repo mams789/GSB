@@ -15,7 +15,13 @@
  */
 
 if ($estConnecte) {
-    include 'vues/v_accueil.php';
+
+  
+    require 'vues/v_accueil.php';
+
+
 } else {
-    include 'vues/v_connexion.php';
+
+    require 'vues/v_connexion.php';
+
 }

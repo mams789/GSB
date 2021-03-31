@@ -15,21 +15,23 @@
  */
 
 
- /** 
+/** 
  * Récupère 'action' dans l'URL
  * envoie nul si aucun élément trouver
 */
-$action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
+
+$action = filtreUrl('action');
 
 
-if (!$uc) {
+if (!$action) {
 
-    $uc = 'demandeconnexion';
+    $action = 'demandeconnexion';
 
 }
 
 
 switch ($action) {
+
 case 'demandeConnexion':
 
     include 'vues/v_connexion.php';
@@ -37,12 +39,15 @@ case 'demandeConnexion':
 
 case 'valideConnexion':
 
-    $login = filter_input(INPUT_POST, 'login', FILTER_SANITIZE_STRING);
-    $mdp = filter_input(INPUT_POST, 'mdp', FILTER_SANITIZE_STRING);
-    $visiteur = $pdo->getInfosVisiteur($login, $mdp);
+    $login = filtrePost('login');
+    $mdp = filtrePost('mdp');
     
-    // si la variable visiteur n'est pas un tableau 
-    if (!is_array($visiteur)) {
+    $utilisateur = $pdo->getInfosVisiteurs($login, $mdp);
+
+
+    if (!is_array($utilisateur)) {
+
+        // Si aucun utilisateur a été trouvé 
 
         ajouterErreur('Login ou mot de passe incorrect');
         include 'vues/v_erreurs.php';
@@ -50,20 +55,23 @@ case 'valideConnexion':
 
     } else {
 
-        $id = $visiteur['id'];
-        $nom = $visiteur['nom'];
-        $prenom = $visiteur['prenom'];
-
-        connecter($id, $nom, $prenom);
-
         
-        // redirection vers index.php
+        $id = $utilisateur['id'];
+        $nom = $utilisateur['nom'];
+        $prenom = $utilisateur['prenom'];
+        $role = $utilisateur['role']; 
+        
+
+        // Créer une variable de session avec les informations de l'utilisateur  
+        connecter($id, $nom, $prenom, $role);
+
+        // redirection vers index.php (routeur)
         header('Location: index.php');
 
         
     }
     break;
-default:
+    default:
     include 'vues/v_connexion.php';
     break;
 }

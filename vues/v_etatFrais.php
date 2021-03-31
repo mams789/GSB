@@ -71,3 +71,28 @@
         ?>
     </table>
 </div>
+
+
+<?php if(estComptable()){  ?>
+
+<div class="row">
+
+<div class="col-sm-2">
+<form method="post" action="index.php?uc=suivrePaiement&action=mettreEnPaiement">
+<input type="hidden" name="idVisiteur" value="<?= $idVisiteur ?>"></input>
+<input type="hidden" name="mois" value="<?= $mois ?>"></input>
+<button type="submit" name="mettreEnPaiement" class="btn btn-success">Mettre en paiement</button>
+</form>
+</div>
+
+<div class="col-sm-2">
+<form method="post" action="index.php?uc=suivrePaiement&action=remboursement">
+<input type="hidden" name="idVisiteur" value="<?= $idVisiteur ?>"></input>
+<input type="hidden" name="mois" value="<?= $mois ?>"></input>
+<button type="submit" name="remboursement" class="btn btn-primary">Fiche payé</button>
+</form>
+</div>
+
+</div>
+
+<?php }  ?>
