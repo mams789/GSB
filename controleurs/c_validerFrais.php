@@ -289,25 +289,39 @@ case 'valider_frais':
         
     // Pour avoir le montant total
 
-    $quantite = 0;
+    $tabMontant = [
+        'montantFrais' => 0,
+        'montantFraisHorsForfait' => 0
+    ];
 
     $lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $mois); 
-
+ 
     foreach ($lesFraisForfait as $unFraisForfait) {
+         $quantite = 0;
          $quantite = $quantite+$unFraisForfait['quantite'];
+         $tabMontant['montantFrais'] +=  $quantite * $pdo->getMontantFraisForfait($unFraisForfait['libelle']);
+         
     } 
 
+    
     $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $mois);
+
+    $montantFraisHorsForfait = 0;
               
     foreach ($lesFraisHorsForfait as $unFraisHorsForfait) {
                    $libelle = htmlspecialchars($unFraisHorsForfait['libelle']);
                    $ref = substr($libelle, 0, 7); 
                    if($ref!=="REFUSER"){
-                    $quantite = $quantite+$unFraisHorsForfait['montant'];
+                    $tabMontant['montantFraisHorsForfait'] += $montantFraisHorsForfait+$unFraisHorsForfait['montant'];
                    }
     }
 
-    $pdo->montantValider($idVisiteur,$mois,$quantite);
+
+    $montantTotal = $tabMontant['montantFrais'] + $tabMontant['montantFraisHorsForfait'];
+
+    
+
+    $pdo->montantValider($idVisiteur,$mois,$montantTotal);
 
 
     echo messageSuccess("La fiche à bien été valider !", "success");

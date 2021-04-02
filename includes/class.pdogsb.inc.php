@@ -664,6 +664,22 @@ class PdoGsb
     }
 
 
+    
+    /**
+     * Permet de récupérer les montant de chaque type de frais forfait
+     *
+     * @return int
+     */
+    public function getMontantFraisForfait($libelle) : int{
+
+        $requete = PdoGSB::$monPdo->query("SELECT montant FROM fraisforfait WHERE libelle = '{$libelle}'");
+
+        $fraisforfait = $requete->fetch();
+
+        return $fraisforfait['montant'];
+
+    }
+
 
 
 

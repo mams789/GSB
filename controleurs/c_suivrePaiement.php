@@ -65,15 +65,29 @@ case"mettreEnPaiement":
         $mois  = filtrePost('mois');   
         $idVisiteur  = filtrePost('idVisiteur');  
 
-        if (isset($_POST['mettreEnPaiement'])) {
+        // Vérifie l'état de la fiche de frais 
+
+        $infoFiche = $pdo->getLesInfosFicheFrais($idVisiteur, $mois);
+
+        //var_dump($infoFiche['idEtat']); die();
+
+
+        if (isset($_POST['mettreEnPaiement']) && $infoFiche['idEtat'] !== 'MP') {
 
              $etat = "MP";
 
              // Modifier l'état de la fiche en MP (Mise en paiement)
              $pdo->majEtatFicheFrais($idVisiteur, $mois, $etat); 
 
-             ajouterErreur('La fiche de frais est désormais mise en paiement');
-             include 'vues/v_erreurs.php';
+             echo messageSuccess('La fiche de frais est désormais mise en paiement', 'success');
+
+            }else{
+
+                ajouterErreur('La fiche est déja mise en paiement !');
+                include 'vues/v_erreurs.php';
+
+            }
+        
 
             $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $mois);
             $lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $mois);
@@ -88,7 +102,7 @@ case"mettreEnPaiement":
         
        
        
-        } 
+      
 
         
         break;
@@ -105,7 +119,7 @@ case 'remboursement':
 
             $pdo-> majEtatFicheFrais($idVisiteur, $mois, $etat);
 
-            echo messageSuccess('Vous venez d\'indiquer que la fiche a été payé', 'info');
+            echo messageSuccess('Vous venez d\'indiquer que la fiche a été payé !', 'info');
 
             $lesFraisHorsForfait = $pdo->getLesFraisHorsForfait($idVisiteur, $mois);
             $lesFraisForfait = $pdo->getLesFraisForfait($idVisiteur, $mois);

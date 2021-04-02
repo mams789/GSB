@@ -90,6 +90,10 @@ case 'validerCreationFrais':
     $libelle = filtrePost('libelle');
     $montant = filtrePost('montant');
 
+    
+
+
+
     valideInfosFrais($dateFrais, $libelle, $montant);
 
     if (nbErreurs() != 0) {
