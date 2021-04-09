@@ -1,6 +1,6 @@
-## PPE APPLI WEB GSB_FRAIS
+## PPE 1 APPLICATION WEB GSB FRAIS
 
-###  Connexion à l'application web 
+###  Pour se connecter à l'application : 
 
 | Role | Identifiants |
 | ------ | ----------- |
