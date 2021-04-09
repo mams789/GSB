@@ -2,12 +2,10 @@
 
 #### PPE APPLI WEB GSB_FRAIS
 
-Session Comptable : 
 
--Id : **dandre**
--Mdp : **oppg5**
+## Connexion à l'application web 
 
-Session Visiteur : 
-
-Login : **cbedos**
-Mot de passe : **gmhxd**
+| Role | Description |
+| ------ | ----------- |
+| Comptable | Login: **dandre**    MDP: **oppg5** |
+| Visiteur | Login: **cbedos**   MDP:  **gmhxd** |
