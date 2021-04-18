@@ -1,6 +1,6 @@
 ## PPE 1 APPLICATION WEB GSB FRAIS
 
-###  Pour se connecter à l'application : 
+  ###  Code d'accès : 
 
 
 **Comptable**  
