@@ -2,7 +2,13 @@
 
 ###  Pour se connecter à l'application : 
 
-| Role | Identifiants |
-| ------ | ----------- |
-| Comptable | Login: **dandre**    MDP: **oppg5** |
-| Visiteur | Login: **cbedos**   MDP:  **gmhxd** |
+
+**Comptable**  
+
+Login: **dandre**    
+Mot de passe: **oppg5** 
+
+**Visiteur**
+
+Login: **cbedos**   
+Mot de passe:  **gmhxd** 
